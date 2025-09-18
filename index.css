@@ -18,33 +18,35 @@
         
         body {
             font-family: 'Courier New', monospace;
-            background: #1a1a1a; /* Серый фон вместо черного */
+            background: #d3d3d3; /* Светло-серый фон */
             color: #00ffcc;
             line-height: 1.6;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px; /* Увеличил ширину контейнера */
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px; /* Увеличил отступы */
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 20px;
+            grid-template-columns: 300px 1fr; /* Увеличил ширину левой панели */
+            gap: 30px; /* Увеличил расстояние между колонками */
         }
         
         /* Header */
         .header {
             background: linear-gradient(135deg, #002244 0%, #003366 100%);
             border-bottom: 3px solid #00ffcc;
-            padding: 20px 0;
+            padding: 25px 0; /* Увеличил отступы */
             text-align: center;
             grid-column: 1 / -1;
             position: relative;
+            border-radius: 10px; /* Добавил скругление углов */
+            margin-bottom: 20px; /* Добавил отступ снизу */
         }
         
         .header h1 {
-            font-size: 2.5em;
+            font-size: 3em; /* Увеличил размер заголовка */
             text-shadow: 0 0 10px #00ffcc;
             letter-spacing: 3px;
         }
@@ -52,23 +54,24 @@
         .header .subtitle {
             color: #00cc99;
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 15px; /* Увеличил отступ */
+            font-size: 1.2em; /* Увеличил размер подзаголовка */
         }
         
         /* Top Navigation - Кнопки справа сверху */
         .top-nav {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 25px; /* Увеличил отступ сверху */
+            right: 25px; /* Увеличил отступ справа */
             display: flex;
-            gap: 10px;
+            gap: 15px; /* Увеличил расстояние между кнопками */
         }
         
         /* Left Navigation - Основное меню СЛЕВА */
         .left-nav {
             background: #002244;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px; /* Увеличил отступы */
+            border-radius: 15px; /* Увеличил скругление углов */
             border: 2px solid #00ffcc;
             height: fit-content;
         }
@@ -76,31 +79,32 @@
         .left-nav-buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px; /* Увеличил расстояние между кнопками */
         }
         
         /* Main Content */
         .main-content {
             background: #002233;
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px; /* Увеличил скругление углов */
+            padding: 35px; /* Увеличил отступы */
             border: 2px solid #00ffcc;
-            min-height: 500px;
+            min-height: 600px; /* Увеличил минимальную высоту */
         }
         
         /* Auth */
         .auth-container {
             background: #002b4d;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            padding: 20px; /* Увеличил отступы */
+            border-radius: 10px; /* Увеличил скругление углов */
+            margin: 25px 0; /* Увеличил отступы */
             border: 1px solid #00ffcc;
             text-align: center;
         }
         
         .auth-info {
-            margin-bottom: 15px;
+            margin-bottom: 20px; /* Увеличил отступ снизу */
             font-weight: bold;
+            font-size: 1.1em; /* Увеличил размер текста */
         }
         
         /* Buttons */
@@ -108,8 +112,8 @@
             background: linear-gradient(135deg, #006699 0%, #0099cc 100%);
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
+            padding: 15px 25px; /* Увеличил отступы внутри кнопок */
+            border-radius: 8px; /* Увеличил скругление углов */
             cursor: pointer;
             font-family: 'Courier New', monospace;
             font-weight: bold;
@@ -117,6 +121,7 @@
             border: 1px solid #00ffcc;
             width: 100%;
             text-align: left;
+            font-size: 1.1em; /* Увеличил размер текста */
         }
         
         button:hover {
@@ -151,13 +156,14 @@
         /* Forms */
         input, textarea, select {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
+            padding: 15px; /* Увеличил отступы */
+            margin: 15px 0; /* Увеличил отступы */
             background: #003366;
             border: 1px solid #00ffcc;
-            border-radius: 6px;
+            border-radius: 8px; /* Увеличил скругление углов */
             color: #00ffcc;
             font-family: 'Courier New', monospace;
+            font-size: 1.1em; /* Увеличил размер текста */
         }
         
         input:focus, textarea:focus, select:focus {
@@ -169,14 +175,14 @@
         /* Article list */
         .article-list {
             list-style: none;
-            margin: 20px 0;
+            margin: 25px 0; /* Увеличил отступы */
         }
         
         .article-item {
             background: #003366;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 8px;
+            padding: 25px; /* Увеличил отступы */
+            margin: 20px 0; /* Увеличил отступы */
+            border-radius: 10px; /* Увеличил скругление углов */
             border: 1px solid #00ffcc;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -190,11 +196,11 @@
         
         .article-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
+            top: 15px; /* Увеличил отступ сверху */
+            right: 15px; /* Увеличил отступ справа */
+            padding: 8px 15px; /* Увеличил отступы */
+            border-radius: 6px; /* Увеличил скругление углов */
+            font-size: 1em; /* Увеличил размер текста */
             font-weight: bold;
         }
         
@@ -209,9 +215,9 @@
         }
         
         .article-author {
-            font-size: 0.9em;
+            font-size: 1em; /* Увеличил размер текста */
             color: #00cc99;
-            margin-top: 10px;
+            margin-top: 15px; /* Увеличил отступ сверху */
         }
         
         /* Views */
@@ -225,11 +231,12 @@
         
         /* Status messages */
         .status-message {
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 6px;
+            padding: 20px; /* Увеличил отступы */
+            margin: 20px 0; /* Увеличил отступы */
+            border-radius: 8px; /* Увеличил скругление углов */
             text-align: center;
             font-weight: bold;
+            font-size: 1.2em; /* Увеличил размер текста */
         }
         
         .status-success {
@@ -247,24 +254,25 @@
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px; /* Увеличил отступ сверху */
+            padding: 25px; /* Увеличил отступы */
             color: #00cc99;
             border-top: 1px solid #00ffcc;
             grid-column: 1 / -1;
+            font-size: 1.1em; /* Увеличил размер текста */
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) { /* Увеличил точку перехода для мобильных устройств */
             .container {
                 grid-template-columns: 1fr;
-                padding: 10px;
+                padding: 20px; /* Увеличил отступы */
             }
             
             .top-nav {
                 position: static;
                 justify-content: center;
-                margin: 10px 0;
+                margin: 15px 0; /* Увеличил отступы */
             }
             
             .left-nav {
@@ -347,6 +355,10 @@
             <!-- Home View -->
             <div class="view active" id="homeView">
                 <h2>Добро пожаловать в Gamma Foundation</h2>
+                
+                <div class="auth-container">
+                    <div class="auth-info" id="authInfo">Статус: Не авторизован</div>
+                </div>
                 
                 <div class="about-section">
                     <h3>О нашей организации</h3>
@@ -561,13 +573,13 @@
                 
                 const title = document.createElement('div');
                 title.style.fontWeight = 'bold';
-                title.style.fontSize = '1.1em';
-                title.style.marginBottom = '10px';
+                title.style.fontSize = '1.2em'; /* Увеличил размер текста */
+                title.style.marginBottom = '15px'; /* Увеличил отступ снизу */
                 title.textContent = article.type === 'object' ? `${article.number} - ${article.title}` : article.title;
                 
                 const preview = document.createElement('div');
                 preview.style.color = '#00cc99';
-                preview.style.marginBottom = '10px';
+                preview.style.marginBottom = '15px'; /* Увеличил отступ снизу */
                 preview.textContent = article.description.substring(0, 150) + (article.description.length > 150 ? '...' : '');
                 
                 const author = document.createElement('div');
@@ -577,7 +589,7 @@
                 if (article.type === 'object') {
                     const classInfo = document.createElement('div');
                     classInfo.style.color = '#ff9966';
-                    classInfo.style.marginBottom = '5px';
+                    classInfo.style.marginBottom = '10px'; /* Увеличил отступ снизу */
                     classInfo.textContent = `Класс: ${article.class}`;
                     item.appendChild(classInfo);
                 }
@@ -600,7 +612,7 @@
             
             let html = `
                 <h2>${article.type === 'object' ? article.number + ' - ' : ''}${article.title}</h2>
-                <div style="background:#003366; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
+                <div style="background:#003366; padding:20px; border-radius:10px; margin:20px 0; border:1px solid #00ffcc;">
                     <p><strong>Тип:</strong> ${article.type === 'object' ? 'Объект' : 'Документ'}</p>
                     <p><strong>Автор:</strong> ${article.author}</p>
                     <p><strong>Создан:</strong> ${new Date(article.date).toLocaleString()}</p>
@@ -615,7 +627,7 @@
             if (article.type === 'object' && article.procedures) {
                 html += `
                     <h3>🔒 Условия содержания</h3>
-                    <div style="background:#003366; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
+                    <div style="background:#003366; padding:20px; border-radius:10px; margin:20px 0; border:1px solid #00ffcc;">
                         <p>${article.procedures}</p>
                     </div>
                 `;
@@ -623,7 +635,7 @@
             
             html += `
                 <h3>📋 ${article.type === 'object' ? 'Описание объекта' : 'Содержание документа'}</h3>
-                <div style="background:#003366; padding:20px; border-radius:8px; border:1px solid #00ffcc; line-height:1.8;">
+                <div style="background:#003366; padding:25px; border-radius:10px; border:1px solid #00ffcc; line-height:1.8;">
                     <p>${article.description}</p>
                 </div>
             `;
