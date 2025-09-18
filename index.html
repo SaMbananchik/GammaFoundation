@@ -18,7 +18,7 @@
         
         body {
             font-family: 'Courier New', monospace;
-            background: #0a0a0a;
+            background: #1a1a1a; /* Серый фон вместо черного */
             color: #00ffcc;
             line-height: 1.6;
             min-height: 100vh;
@@ -28,14 +28,18 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
         }
         
         /* Header */
         .header {
-            background: linear-gradient(135deg, #001122 0%, #003366 100%);
+            background: linear-gradient(135deg, #002244 0%, #003366 100%);
             border-bottom: 3px solid #00ffcc;
             padding: 20px 0;
             text-align: center;
+            grid-column: 1 / -1;
             position: relative;
         }
         
@@ -60,28 +64,33 @@
             gap: 10px;
         }
         
-        /* Main Navigation - Основное меню справа */
-        .main-nav {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
+        /* Left Navigation - Основное меню СЛЕВА */
+        .left-nav {
             background: #002244;
             padding: 20px;
             border-radius: 10px;
             border: 2px solid #00ffcc;
-            z-index: 1000;
+            height: fit-content;
         }
         
-        .main-nav-buttons {
+        .left-nav-buttons {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
         
+        /* Main Content */
+        .main-content {
+            background: #002233;
+            border-radius: 10px;
+            padding: 30px;
+            border: 2px solid #00ffcc;
+            min-height: 500px;
+        }
+        
         /* Auth */
         .auth-container {
-            background: #001a33;
+            background: #002b4d;
             padding: 15px;
             border-radius: 8px;
             margin: 20px 0;
@@ -99,19 +108,20 @@
             background: linear-gradient(135deg, #006699 0%, #0099cc 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
             font-weight: bold;
             transition: all 0.3s ease;
             border: 1px solid #00ffcc;
-            min-width: 120px;
+            width: 100%;
+            text-align: left;
         }
         
         button:hover {
             background: linear-gradient(135deg, #0099cc 0%, #00ccff 100%);
-            transform: translateY(-2px);
+            transform: translateX(5px);
             box-shadow: 0 0 15px #00ffcc;
         }
         
@@ -143,7 +153,7 @@
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            background: #002b4d;
+            background: #003366;
             border: 1px solid #00ffcc;
             border-radius: 6px;
             color: #00ffcc;
@@ -163,7 +173,7 @@
         }
         
         .article-item {
-            background: #002b4d;
+            background: #003366;
             padding: 20px;
             margin: 15px 0;
             border-radius: 8px;
@@ -207,7 +217,6 @@
         /* Views */
         .view {
             display: none;
-            margin-right: 80px; /* Отступ для бокового меню */
         }
         
         .view.active {
@@ -242,11 +251,13 @@
             padding: 20px;
             color: #00cc99;
             border-top: 1px solid #00ffcc;
+            grid-column: 1 / -1;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
             .container {
+                grid-template-columns: 1fr;
                 padding: 10px;
             }
             
@@ -256,20 +267,17 @@
                 margin: 10px 0;
             }
             
-            .main-nav {
-                position: static;
-                transform: none;
-                margin: 20px 0;
+            .left-nav {
+                order: 2;
             }
             
-            .main-nav-buttons {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
+            .main-content {
+                order: 1;
             }
             
-            .view {
-                margin-right: 0;
+            button {
+                width: 100%;
+                text-align: center;
             }
         }
         
@@ -287,13 +295,7 @@
     <div class="seo-content">
         <h1>Gamma Foundation - База данных аномальных объектов</h1>
         <h2>Официальный архив Gamma Foundation</h2>
-        <p>Gamma Foundation - международная организация, занимающаяся исследованием, содержанием и защитой аномальных объектов и явлений. Наша база данных содержит информацию об объектах классов Alpha, Beta, Gamma, Delta.</p>
-        <h3>Классификация аномальных объектов</h3>
-        <p>Система классификации Gamma Foundation включает следующие классы: Alpha (безопасные объекты), Beta (условно-безопасные), Gamma (опасные объекты), Delta (критическая угроза).</p>
-        <h3>Документация и исследования</h3>
-        <p>В нашей базе данных содержатся отчеты об инцидентах, протоколы исследований, документация по содержанию аномальных объектов.</p>
-        <h3>Доступ к информации</h3>
-        <p>Доступ к базе данных Gamma Foundation строго ограничен. Для получения доступа требуется специальное приглашение и авторизация.</p>
+        <p>Gamma Foundation - международная организация, занимающаяся исследованием, содержанием и защитой аномальных объектов и явлений.</p>
     </div>
 
     <div class="container">
@@ -310,66 +312,57 @@
             </div>
         </div>
 
-        <!-- Основное меню справа -->
-        <div class="main-nav">
-            <div class="main-nav-buttons">
-                <button onclick="showView('home')">Главная</button>
-                <button onclick="showView('catalog')">Каталог</button>
-                <button onclick="showView('create')" id="createBtn" disabled>Создать</button>
-                <button onclick="showView('invites')" id="invitesBtn" style="display:none;">Приглашения</button>
+        <!-- Основное меню СЛЕВА -->
+        <div class="left-nav">
+            <div class="left-nav-buttons">
+                <button onclick="showView('home')">🏠 Главная</button>
+                <button onclick="showView('catalog')">📁 Каталог</button>
+                <button onclick="showView('create')" id="createBtn" disabled>📝 Создать</button>
+                <button onclick="showView('invites')" id="invitesBtn" style="display:none;">📨 Приглашения</button>
             </div>
-        </div>
-
-        <!-- Auth Container -->
-        <div class="auth-container">
-            <div class="auth-info" id="authInfo">Статус: Не авторизован</div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
             <!-- Login View -->
             <div class="view" id="loginView">
-                <h2>Авторизация персонала</h2>
+                <h2>🔐 Авторизация</h2>
                 <form id="loginForm">
-                    <input type="text" id="username" placeholder="Никнейм" required>
-                    <input type="password" id="password" placeholder="Пароль" required>
+                    <input type="text" id="username" placeholder="Ваш никнейм" required>
+                    <input type="password" id="password" placeholder="Ваш пароль" required>
                     <button type="submit">Войти в систему</button>
                 </form>
             </div>
 
             <!-- Register View -->
             <div class="view" id="registerView">
-                <h2>Регистрация по приглашению</h2>
+                <h2>📝 Регистрация</h2>
                 <form id="registerForm">
                     <input type="text" id="regUsername" placeholder="Придумайте никнейм" required>
                     <input type="password" id="regPassword" placeholder="Придумайте пароль" required>
-                    <input type="text" id="inviteCode" placeholder="Код приглашения" required>
-                    <button type="submit">Зарегистрироваться</button>
+                    <button type="submit">Создать аккаунт</button>
                 </form>
             </div>
 
             <!-- Home View -->
             <div class="view active" id="homeView">
-                <h2>Добро пожаловать в Базу Данных Gamma Foundation</h2>
+                <h2>Добро пожаловать в Gamma Foundation</h2>
                 
                 <div class="about-section">
-                    <h3>О Gamma Foundation</h3>
-                    <p>Международная организация по исследованию и содержанию аномальных объектов. Наша миссия - защита человечества от неизвестных угроз.</p>
-                    <p>База данных содержит классифицированную информацию об аномальных объектах, документах и исследованиях.</p>
+                    <h3>О нашей организации</h3>
+                    <p>Gamma Foundation - международная организация, специализирующаяся на исследовании и содержании аномальных объектов. Наша миссия - защита человечества от неизвестных угроз.</p>
                 </div>
 
                 <div class="stats">
                     <h3>📊 Статистика системы</h3>
                     <p>Документов в базе: <strong id="articleCount">0</strong></p>
                     <p>Зарегистрировано пользователей: <strong id="userCount">0</strong></p>
-                    <p>Активных приглашений: <strong id="invitesCount">0</strong></p>
                 </div>
 
                 <div class="quick-access">
                     <h3>⚡ Быстрый доступ</h3>
                     <p>• Для просмотра документов перейдите в "Каталог"</p>
                     <p>• Для создания новых записей требуется авторизация</p>
-                    <p>• Доступ к системе по приглашениям</p>
                 </div>
             </div>
 
@@ -403,12 +396,11 @@
                             <option value="Beta">Beta - Условно-безопасный</option>
                             <option value="Gamma">Gamma - Опасный</option>
                             <option value="Delta">Delta - Критическая угроза</option>
-                            <option value="Neutralized">Neutralized - Нейтрализован</option>
                         </select>
                         <textarea id="articleProcedures" placeholder="Особые условия содержания" rows="3"></textarea>
                     </div>
                     
-                    <textarea id="articleDescription" placeholder="Подробное описание объекта/документа..." rows="6" required></textarea>
+                    <textarea id="articleDescription" placeholder="Подробное описание..." rows="6" required></textarea>
                     <button type="submit">💾 Сохранить документ</button>
                 </form>
             </div>
@@ -430,14 +422,14 @@
                 <div class="invite-section">
                     <h3>Создать новое приглашение</h3>
                     <button onclick="generateInvite()">🎫 Сгенерировать приглашение</button>
-                    <div id="inviteResult" style="display:none; margin-top:20px; padding:15px; background:#002b4d; border-radius:8px; border:1px solid #00ffcc;">
+                    <div id="inviteResult" style="display:none; margin-top:20px; padding:15px; background:#003366; border-radius:8px; border:1px solid #00ffcc;">
                         <h4>✅ Приглашение создано</h4>
                         <p><strong>Ссылка для приглашения:</strong></p>
-                        <div style="background:#001a33; padding:10px; border-radius:5px; margin:10px 0;">
+                        <div style="background:#002b4d; padding:10px; border-radius:5px; margin:10px 0;">
                             <span id="inviteUrl" style="word-break:break-all;"></span>
                         </div>
                         <p><strong>Код приглашения:</strong></p>
-                        <div style="background:#001a33; padding:10px; border-radius:5px; margin:10px 0;">
+                        <div style="background:#002b4d; padding:10px; border-radius:5px; margin:10px 0;">
                             <span id="inviteCodeDisplay" style="font-weight:bold;"></span>
                         </div>
                         <div style="display:flex; gap:10px; margin-top:15px;">
@@ -446,11 +438,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="invite-section" style="margin-top:30px;">
-                    <h3>📊 Статистика приглашений</h3>
-                    <div id="activeInvites"></div>
-                </div>
             </div>
         </div>
 
@@ -458,7 +445,6 @@
         <div class="footer">
             <p>Gamma Foundation Database v3.0 | Secure Access System</p>
             <p>© 2024 Gamma Foundation. Все права защищены.</p>
-            <p style="font-size:0.8em; color:#00cc99;">Конфиденциально. Для служебного пользования.</p>
         </div>
     </div>
 
@@ -529,7 +515,6 @@
         function updateStats() {
             document.getElementById('articleCount').textContent = articles.length;
             document.getElementById('userCount').textContent = users.length;
-            document.getElementById('invitesCount').textContent = invites.filter(i => !i.used).length;
             document.getElementById('totalArticles').textContent = articles.length;
         }
 
@@ -542,7 +527,6 @@
             
             if (viewName === 'catalog') loadArticleList();
             if (viewName === 'home') updateStats();
-            if (viewName === 'invites') loadInvites();
         }
 
         // Выход
@@ -616,7 +600,7 @@
             
             let html = `
                 <h2>${article.type === 'object' ? article.number + ' - ' : ''}${article.title}</h2>
-                <div style="background:#002b4d; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
+                <div style="background:#003366; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
                     <p><strong>Тип:</strong> ${article.type === 'object' ? 'Объект' : 'Документ'}</p>
                     <p><strong>Автор:</strong> ${article.author}</p>
                     <p><strong>Создан:</strong> ${new Date(article.date).toLocaleString()}</p>
@@ -631,7 +615,7 @@
             if (article.type === 'object' && article.procedures) {
                 html += `
                     <h3>🔒 Условия содержания</h3>
-                    <div style="background:#002b4d; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
+                    <div style="background:#003366; padding:15px; border-radius:8px; margin:15px 0; border:1px solid #00ffcc;">
                         <p>${article.procedures}</p>
                     </div>
                 `;
@@ -639,7 +623,7 @@
             
             html += `
                 <h3>📋 ${article.type === 'object' ? 'Описание объекта' : 'Содержание документа'}</h3>
-                <div style="background:#002b4d; padding:20px; border-radius:8px; border:1px solid #00ffcc; line-height:1.8;">
+                <div style="background:#003366; padding:20px; border-radius:8px; border:1px solid #00ffcc; line-height:1.8;">
                     <p>${article.description}</p>
                 </div>
             `;
@@ -744,47 +728,6 @@
             document.getElementById('inviteUrl').textContent = inviteUrl;
             document.getElementById('inviteCodeDisplay').textContent = inviteCode;
             document.getElementById('inviteResult').style.display = 'block';
-            
-            loadInvites();
-        }
-
-        // Загрузка приглашений
-        function loadInvites() {
-            const container = document.getElementById('activeInvites');
-            const activeInvites = invites.filter(i => !i.used);
-            const usedInvites = invites.filter(i => i.used);
-            
-            let html = '<h4>Активные приглашения:</h4>';
-            if (activeInvites.length === 0) {
-                html += '<p>Нет активных приглашений</p>';
-            } else {
-                activeInvites.forEach(invite => {
-                    html += `
-                        <div style="background:#002b4d; padding:15px; margin:10px 0; border-radius:8px; border:1px solid #00ffcc;">
-                            <p><strong>Код:</strong> ${invite.code}</p>
-                            <p><strong>Создано:</strong> ${new Date(invite.created).toLocaleString()}</p>
-                            <p><strong>Кем:</strong> ${invite.createdBy}</p>
-                        </div>
-                    `;
-                });
-            }
-            
-            html += '<h4 style="margin-top:30px;">Использованные приглашения:</h4>';
-            if (usedInvites.length === 0) {
-                html += '<p>Нет использованных приглашений</p>';
-            } else {
-                usedInvites.forEach(invite => {
-                    html += `
-                        <div style="background:#002b4d; padding:15px; margin:10px 0; border-radius:8px; border:1px solid #666;">
-                            <p><strong>Код:</strong> ${invite.code}</p>
-                            <p><strong>Использовано:</strong> ${new Date(invite.usedAt).toLocaleString()}</p>
-                            <p><strong>Кем:</strong> ${invite.usedBy}</p>
-                        </div>
-                    `;
-                });
-            }
-            
-            container.innerHTML = html;
         }
 
         // Копирование приглашения
@@ -842,21 +785,15 @@
                 }
             };
 
-            // Регистрация
+            // Регистрация (БЕЗ кода приглашения)
             document.getElementById('registerForm').onsubmit = function(e) {
                 e.preventDefault();
                 
                 const username = document.getElementById('regUsername').value.trim();
                 const password = document.getElementById('regPassword').value;
-                const inviteCode = document.getElementById('inviteCode').value;
                 
                 if (users.find(u => u.username === username)) {
                     showStatus('❌ Пользователь с таким именем уже существует', 'error');
-                    return;
-                }
-                
-                if (inviteCode !== 'GAMMA-ACCESS-2024') {
-                    showStatus('❌ Неверный код приглашения', 'error');
                     return;
                 }
                 
