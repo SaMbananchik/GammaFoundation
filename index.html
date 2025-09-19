@@ -303,7 +303,7 @@
     <div class="seo-content">
         <h1>Gamma Foundation - База данных аномальных объектов</h1>
         <h2>Официальный архив Gamma Foundation</h2>
-        <p>Gamma Foundation - международная организация, занимающаяся исследованием, содержанием и защитой аномальных объектов и явлений.</p>
+        <p>Gamma Foundation - международная организации, занимающаяся исследованием, содержанием и защитой аномальных объектов и явлений.</p>
     </div>
 
     <div class="container">
@@ -423,8 +423,8 @@
                 <div id="articleContent"></div>
                 <div id="adminControls" style="display:none; margin-top:20px;">
                     <h3>⚙️ Административные функции</h3>
-                    <button onclick="editCurrentArticle()" class="btn-edit">✏️ Редактировать</button>
-                    <button onclick="deleteCurrentArticle()" class="btn-danger">🗑️ Удалить</button>
+                    <button onclick="editCurrentArticle()" class="btn-edit" id="editArticleBtn">✏️ Редактировать</button>
+                    <button onclick="deleteCurrentArticle()" class="btn-danger" id="deleteArticleBtn">🗑️ Удалить</button>
                 </div>
             </div>
 
@@ -488,11 +488,45 @@
                 localStorage.setItem('gammaUsers', JSON.stringify(users));
             }
             
+            // Создаем демо-статьи если их нет
+            if (articles.length === 0) {
+                createDemoArticles();
+            }
+            
             checkAuth();
             loadArticleList();
             updateStats();
             setupEventListeners();
             showView('home');
+        }
+
+        // Создание демо-статей
+        function createDemoArticles() {
+            articles = [
+                {
+                    id: 1,
+                    type: 'object',
+                    number: 'GF-173',
+                    title: 'Статуя-охранник',
+                    class: 'Beta',
+                    procedures: 'Объект должен содержаться в камере 5x5 метров. При входе в камеру необходимо поддерживать визуальный контакт с объектом.',
+                    description: 'Объект GF-173 представляет собой статую высотой 1.8 метра, напоминающую человеческую фигуру. При прерывании визуального контакта объект проявляет крайнюю агрессию и способен передвигаться со скоростью до 50 км/ч.',
+                    author: 'admin',
+                    date: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    type: 'document',
+                    number: '',
+                    title: 'Протокол безопасности уровня Gamma',
+                    class: '',
+                    procedures: '',
+                    description: 'Данный документ описывает стандартные процедуры безопасности для объектов класса Gamma. Все сотрудники обязаны ознакомиться с содержанием перед работой с аномальными объектами.',
+                    author: 'admin',
+                    date: new Date().toISOString()
+                }
+            ];
+            localStorage.setItem('gammaArticles', JSON.stringify(articles));
         }
 
         // Проверка авторизации
@@ -518,7 +552,7 @@
             document.getElementById('logoutBtn').style.display = isAuthenticated ? 'block' : 'none';
             document.getElementById('registerBtn').style.display = isAuthenticated ? 'none' : 'block';
             document.getElementById('createBtn').disabled = !isAuthenticated;
-            document.getElementById('invitesBtn').style.display = (userAccessLevel === 2) ? 'block' : 'none';
+            document.getElementById('invitesBtn').style.display = (userAccessLevel >= 2) ? 'block' : 'none';
             
             updateStats();
         }
@@ -552,7 +586,7 @@
             showStatus('Сессия завершена', 'success');
         }
 
-        // Загрузка списка статей
+        // Загрузка списка статей (теперь доступна всем)
         function loadArticleList() {
             const list = document.getElementById('articleList');
             
@@ -573,13 +607,13 @@
                 
                 const title = document.createElement('div');
                 title.style.fontWeight = 'bold';
-                title.style.fontSize = '1.2em'; /* Увеличил размер текста */
-                title.style.marginBottom = '15px'; /* Увеличил отступ снизу */
+                title.style.fontSize = '1.2em';
+                title.style.marginBottom = '15px';
                 title.textContent = article.type === 'object' ? `${article.number} - ${article.title}` : article.title;
                 
                 const preview = document.createElement('div');
                 preview.style.color = '#00cc99';
-                preview.style.marginBottom = '15px'; /* Увеличил отступ снизу */
+                preview.style.marginBottom = '15px';
                 preview.textContent = article.description.substring(0, 150) + (article.description.length > 150 ? '...' : '');
                 
                 const author = document.createElement('div');
@@ -589,7 +623,7 @@
                 if (article.type === 'object') {
                     const classInfo = document.createElement('div');
                     classInfo.style.color = '#ff9966';
-                    classInfo.style.marginBottom = '10px'; /* Увеличил отступ снизу */
+                    classInfo.style.marginBottom = '10px';
                     classInfo.textContent = `Класс: ${article.class}`;
                     item.appendChild(classInfo);
                 }
@@ -602,7 +636,7 @@
             });
         }
 
-        // Чтение статьи
+        // Чтение статьи (теперь доступно всем)
         function readArticle(articleId) {
             const article = articles.find(a => a.id === articleId);
             if (!article) return;
@@ -641,7 +675,40 @@
             `;
             
             content.innerHTML = html;
-            document.getElementById('adminControls').style.display = userAccessLevel === 2 ? 'block' : 'none';
+            
+            // Показываем кнопки администрирования только авторизованным пользователям
+            const adminControls = document.getElementById('adminControls');
+            const editBtn = document.getElementById('editArticleBtn');
+            const deleteBtn = document.getElementById('deleteArticleBtn');
+            
+            if (isAuthenticated) {
+                if (userAccessLevel >= 5) {
+                    // Суперадмин (уровень 5) - может редактировать и удалять любые статьи
+                    adminControls.style.display = 'block';
+                    editBtn.style.display = 'block';
+                    deleteBtn.style.display = 'block';
+                } else if (userAccessLevel >= 2) {
+                    // Админ (уровень 2) - может удалять и редактировать только свои статьи
+                    adminControls.style.display = 'block';
+                    if (article.author === currentUser) {
+                        editBtn.style.display = 'block';
+                        deleteBtn.style.display = 'block';
+                    } else {
+                        editBtn.style.display = 'none';
+                        deleteBtn.style.display = 'none';
+                    }
+                } else if (userAccessLevel >= 1 && article.author === currentUser) {
+                    // Обычный пользователь - может редактировать только свои статьи
+                    adminControls.style.display = 'block';
+                    editBtn.style.display = 'block';
+                    deleteBtn.style.display = 'block';
+                } else {
+                    adminControls.style.display = 'none';
+                }
+            } else {
+                adminControls.style.display = 'none';
+            }
+            
             showView('read');
         }
 
@@ -651,6 +718,12 @@
             
             if (!isAuthenticated) {
                 showStatus('❌ Требуется авторизация', 'error');
+                return;
+            }
+            
+            // Проверяем уровень доступа для создания статей
+            if (userAccessLevel < 1) {
+                showStatus('❌ Недостаточно прав для создания статей', 'error');
                 return;
             }
             
@@ -688,6 +761,12 @@
             const article = articles.find(a => a.id === currentArticleId);
             if (!article) return;
             
+            // Проверяем права на редактирование
+            if (userAccessLevel < 5 && article.author !== currentUser) {
+                showStatus('❌ Вы можете редактировать только свои статьи', 'error');
+                return;
+            }
+            
             // Заполняем форму редактирования
             document.getElementById('articleType').value = article.type;
             document.getElementById('articleNumber').value = article.number || '';
@@ -702,6 +781,15 @@
 
         // Удаление статьи
         function deleteCurrentArticle() {
+            const article = articles.find(a => a.id === currentArticleId);
+            if (!article) return;
+            
+            // Проверяем права на удаление
+            if (userAccessLevel < 5 && article.author !== currentUser) {
+                showStatus('❌ Вы можете удалять только свои статьи', 'error');
+                return;
+            }
+            
             if (confirm('Вы уверены, что хотите удалить этот документ?')) {
                 articles = articles.filter(a => a.id !== currentArticleId);
                 localStorage.setItem('gammaArticles', JSON.stringify(articles));
@@ -719,7 +807,7 @@
 
         // Генерация приглашения
         function generateInvite() {
-            if (userAccessLevel !== 2) {
+            if (userAccessLevel < 2) {
                 showStatus('❌ Только администраторы могут создавать приглашения', 'error');
                 return;
             }
@@ -797,7 +885,7 @@
                 }
             };
 
-            // Регистрация (БЕЗ кода приглашения)
+            // Регистрация (с проверкой специальных паролей)
             document.getElementById('registerForm').onsubmit = function(e) {
                 e.preventDefault();
                 
@@ -809,17 +897,26 @@
                     return;
                 }
                 
+                // Определяем уровень доступа на основе пароля
+                let accessLevel = 1; // Обычный пользователь
+                
+                if (password === SUPER_ADMIN_PASSWORD) {
+                    accessLevel = 5; // Суперадмин
+                } else if (password === ADMIN_PASSWORD) {
+                    accessLevel = 2; // Админ
+                }
+                
                 const newUser = {
                     username: username,
                     password: password,
-                    accessLevel: 1,
+                    accessLevel: accessLevel,
                     registered: new Date().toISOString()
                 };
                 
                 users.push(newUser);
                 localStorage.setItem('gammaUsers', JSON.stringify(users));
                 
-                showStatus('✅ Регистрация успешна! Теперь вы можете войти в систему', 'success');
+                showStatus(`✅ Регистрация успешна! Уровень доступа: ${accessLevel}`, 'success');
                 showView('login');
                 this.reset();
             };
